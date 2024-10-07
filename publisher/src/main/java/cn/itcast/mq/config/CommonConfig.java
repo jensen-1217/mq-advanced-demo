@@ -46,10 +46,15 @@ public class CommonConfig implements ApplicationContextAware {
         rabbitTemplate.setReturnsCallback(new RabbitTemplate.ReturnsCallback() {
             @Override
             public void returnedMessage(ReturnedMessage returned) {
-                // 投递失败，记录日志
-                log.error("消息发送失败，应答码:{}，原因:{}，交换机:{}，路由键:{},消息:{}",
-                       returned.getReplyCode(),returned.getReplyText(),returned.getExchange(),returned.getRoutingKey(),returned.getMessage());
-                // 如果有业务需要，可以重发消息
+                //判断是不是延迟队列
+                Long receivedDelayLong = returned.getMessage().getMessageProperties().getReceivedDelayLong();
+                if (receivedDelayLong<=0){
+                    // 投递失败，记录日志
+                    log.error("消息发送失败，应答码:{}，原因:{}，交换机:{}，路由键:{},消息:{}",
+                            returned.getReplyCode(),returned.getReplyText(),returned.getExchange(),returned.getRoutingKey(),returned.getMessage());
+                    // 如果有业务需要，可以重发消息
+                }
+
             }
         });
     }

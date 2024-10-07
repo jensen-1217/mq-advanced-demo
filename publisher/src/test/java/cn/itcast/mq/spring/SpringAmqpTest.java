@@ -64,4 +64,16 @@ public class SpringAmqpTest {
         rabbitTemplate.convertAndSend("ttl.direct",routingKey,build);
         log.info("当前系统时间：{}", LocalDateTime.now());
     }
+
+    @Test
+    public void sendDelayQueue() throws InterruptedException {
+        String routingKey = "delay";
+        String message = "hello, spring amqp!";
+        // 自定义数据 设置非持久化消息
+        Message build = MessageBuilder.withBody(message.getBytes(StandardCharsets.UTF_8))
+                .setHeader("x-delay",10000)
+                .build();
+        rabbitTemplate.convertAndSend("delay.direct",routingKey,build);
+        log.info("当前系统时间：{}", LocalDateTime.now());
+    }
 }
