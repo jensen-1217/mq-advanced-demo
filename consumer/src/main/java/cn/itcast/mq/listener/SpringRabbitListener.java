@@ -3,6 +3,9 @@ package cn.itcast.mq.listener;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -27,5 +30,19 @@ public class SpringRabbitListener {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+    }
+
+//    @RabbitListener(bindings = @QueueBinding(
+//            value = @Queue(name = "dl.queue", durable = "true"),
+//            exchange = @Exchange(name = "dl.direct"),
+//            key = "ttl"
+//    ))
+//    public void listenDlQueue(String msg){
+//        log.info("接收到 dl.queue的延迟消息：{}", msg);
+//    }
+
+    @RabbitListener(queues = "dl.queue")
+    public void dlQueue(String msg){
+        log.info("消费者接收到dl.queue的消息:【{}】,{}",msg,LocalDateTime.now());
     }
 }

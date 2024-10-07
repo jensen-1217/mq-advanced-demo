@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Slf4j
@@ -49,5 +50,18 @@ public class SpringAmqpTest {
 //                return message;
 //            }
 //        },data);
+    }
+
+    @Test
+    public void sendTTLQueue() throws InterruptedException {
+        String routingKey = "ttl";
+        String message = "hello, spring amqp!";
+        // 自定义数据 设置非持久化消息
+        Message build = MessageBuilder.withBody(message.getBytes(StandardCharsets.UTF_8))
+                .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
+                .setExpiration("5000")//设置消息失效时间
+                .build();
+        rabbitTemplate.convertAndSend("ttl.direct",routingKey,build);
+        log.info("当前系统时间：{}", LocalDateTime.now());
     }
 }
