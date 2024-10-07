@@ -2,4 +2,4 @@
 /mq-advanced-demo.iml
 /publisher/publisher.iml
 /consumer/consumer.iml
-/publisher/target/classes/
+/**/target/
