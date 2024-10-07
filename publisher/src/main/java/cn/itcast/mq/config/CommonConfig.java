@@ -56,11 +56,11 @@ public class CommonConfig implements ApplicationContextAware {
     @Bean
     public DirectExchange simpleExchange(){
         // 三个参数：交换机名称、是否持久化、当没有queue与其绑定时是否自动删除
-        return new DirectExchange("simple.direct", false, false);
+        return new DirectExchange("simple.direct", true, false);
     }
     @Bean
     public Queue simpleQueue(){
-        return new Queue("simple.queue",false);
+        return new Queue("simple.queue",true);
     }
     @Bean
     public Binding binding(){
