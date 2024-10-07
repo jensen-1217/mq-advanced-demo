@@ -58,12 +58,36 @@ public class CommonConfig implements ApplicationContextAware {
         // 三个参数：交换机名称、是否持久化、当没有queue与其绑定时是否自动删除
         return new DirectExchange("simple.direct", true, false);
     }
+//    @Bean
+//    public Queue simpleQueue(){
+//        return new Queue("simple.queue",true);
+//    }
     @Bean
     public Queue simpleQueue(){
-        return new Queue("simple.queue",true);
+        return QueueBuilder.durable("simple.queue") // 指定队列名称，并持久化
+                .deadLetterExchange("dl.direct")// 指定死信交换机
+                .deadLetterRoutingKey("dl")//指定死信路由
+                .build();
     }
     @Bean
     public Binding binding(){
         return BindingBuilder.bind(simpleQueue()).to(simpleExchange()).with("simple");
+    }
+
+
+    // 声明死信交换机 dl.direct
+    @Bean
+    public DirectExchange dlExchange(){
+        return new DirectExchange("dl.direct", true, false);
+    }
+    // 声明存储死信的队列 dl.queue
+    @Bean
+    public Queue dlQueue(){
+        return new Queue("dl.queue", true);
+    }
+    // 将死信队列 与 死信交换机绑定
+    @Bean
+    public Binding dlBinding(){
+        return BindingBuilder.bind(dlQueue()).to(dlExchange()).with("dl");
     }
 }

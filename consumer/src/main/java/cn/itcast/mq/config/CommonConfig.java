@@ -29,8 +29,8 @@ public class CommonConfig {
 //RepublishMessageRecoverer：重试耗尽后，将失败消息投递到指定的交换机
     //- RejectAndDontRequeueRecoverer：重试耗尽后，直接reject，丢弃消息。默认就是这种方式
 //- ImmediateRequeueMessageRecoverer：重试耗尽后，返回nack，消息重新入队
-    @Bean
-    public MessageRecoverer messageRecoverer(RabbitTemplate rabbitTemplate){
-        return new RepublishMessageRecoverer(rabbitTemplate, "error.direct", "error");
-    }
+//    @Bean
+//    public MessageRecoverer messageRecoverer(RabbitTemplate rabbitTemplate){
+//        return new RepublishMessageRecoverer(rabbitTemplate, "error.direct", "error");
+//    }
 }
