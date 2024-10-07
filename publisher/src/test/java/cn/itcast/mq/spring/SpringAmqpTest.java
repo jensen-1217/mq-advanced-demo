@@ -36,7 +36,7 @@ public class SpringAmqpTest {
         String routingKey = "simple";
         String message = "hello, spring amqp!";
         // 自定义数据 设置非持久化消息
-        Message message1 = MessageBuilder.withBody(message.getBytes(StandardCharsets.UTF_8)).setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT).build();
+        Message message1 = MessageBuilder.withBody(message.getBytes(StandardCharsets.UTF_8)).setDeliveryMode(MessageDeliveryMode.PERSISTENT).build();
 //        CorrelationData data = new CorrelationData(UUID.randomUUID().toString());
         rabbitTemplate.convertAndSend("simple.direct",routingKey,message1);
 //        // 发送消息
