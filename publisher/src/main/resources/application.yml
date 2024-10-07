@@ -10,3 +10,7 @@ spring:
     username: jensen
     password: 123456
     virtual-host: /
+    publisher-confirm-type: correlated #发送确认 异步回调
+    publisher-returns: true #消息回执
+    template:
+      mandatory: true #消息路由失败时的策略 true，则调用ReturnCallback；false：则直接丢弃消息
