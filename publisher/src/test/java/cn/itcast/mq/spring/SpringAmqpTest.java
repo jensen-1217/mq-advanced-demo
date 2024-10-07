@@ -19,6 +19,6 @@ public class SpringAmqpTest {
     public void testSendMessage2SimpleQueue() throws InterruptedException {
         String routingKey = "simple";
         String message = "hello, spring amqp!";
-        rabbitTemplate.convertAndSend("simple.direct", routingKey, message);
+        rabbitTemplate.convertAndSend("simple.direct1", routingKey, message);
     }
 }
