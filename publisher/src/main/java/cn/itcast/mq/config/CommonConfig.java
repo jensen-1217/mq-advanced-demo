@@ -95,4 +95,18 @@ public class CommonConfig implements ApplicationContextAware {
     public Binding dlBinding(){
         return BindingBuilder.bind(dlQueue()).to(dlExchange()).with("dl");
     }
+
+    // 惰性队列
+    @Bean
+    public Queue lazyQueue(){
+        return QueueBuilder.durable("lazy.queue")
+                .lazy()
+                .build();
+    }
+    // 普通队列
+    @Bean
+    public Queue normalQueue(){
+        return QueueBuilder.durable("normal.queue")
+                .build();
+    }
 }

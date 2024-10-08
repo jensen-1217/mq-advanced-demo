@@ -76,4 +76,16 @@ public class SpringAmqpTest {
         rabbitTemplate.convertAndSend("delay.direct",routingKey,build);
         log.info("当前系统时间：{}", LocalDateTime.now());
     }
+
+    @Test
+    public void testSendManyMsg(){
+
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 300000; i++) {
+            CorrelationData data = new CorrelationData(UUID.randomUUID().toString());
+            rabbitTemplate.convertAndSend( "","lazy.queue", "message "+i,data);
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println("批量发送消息 消耗时间: " + (endTime - startTime));
+    }
 }

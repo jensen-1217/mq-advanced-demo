@@ -36,6 +36,7 @@ public class CommonConfig {
         return QueueBuilder.durable("ttl.queue") // 指定队列名称，并持久化
                 .ttl(10000) // 设置队列的超时时间，10秒
                 .deadLetterExchange("dl.direct") // 指定死信交换机
+                .quorum()//仲裁队列
                 .deadLetterRoutingKey("dl")
                 .build();
     }
